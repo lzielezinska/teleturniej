@@ -1,30 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj": {}
+    "/Users/justynarochna/Projects/raccoonsdream/teleturniej.git/QuizApp/QuizApp.csproj": {}
   },
   "projects": {
-    "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj": {
+    "/Users/justynarochna/Projects/raccoonsdream/teleturniej.git/QuizApp/QuizApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj",
+        "projectUniqueName": "/Users/justynarochna/Projects/raccoonsdream/teleturniej.git/QuizApp/QuizApp.csproj",
         "projectName": "QuizApp",
-        "projectPath": "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj",
-        "packagesPath": "C:\\Users\\arekd\\.nuget\\packages\\",
-        "outputPath": "C:\\GitHub\\quiz-app\\QuizApp\\obj\\",
+        "projectPath": "/Users/justynarochna/Projects/raccoonsdream/teleturniej.git/QuizApp/QuizApp.csproj",
+        "packagesPath": "/Users/justynarochna/.nuget/packages/",
+        "outputPath": "/Users/justynarochna/Projects/raccoonsdream/teleturniej.git/QuizApp/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\arekd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/justynarochna/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +38,52 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNet.SignalR": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Microsoft.AspNet.WebApi.OwinSelfHost": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNetCore.SignalR.Core": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.Owin": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "Microsoft.Owin.Cors": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "Microsoft.Owin.Security": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "Owin": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "jQuery": {
+              "target": "Package",
+              "version": "[3.4.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

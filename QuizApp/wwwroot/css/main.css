@@ -1,0 +1,9 @@
+﻿.answer-card {
+	height: 250px;
+	background-color: lightgrey;
+}
+
+.answer-card:hover {
+	cursor: pointer;
+	background-color: darkolivegreen;
+}

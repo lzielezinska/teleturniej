@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj": {}
+    "C:\\ProjektZespolowy\\teleturniej\\QuizApp\\QuizApp.csproj": {}
   },
   "projects": {
-    "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj": {
+    "C:\\ProjektZespolowy\\teleturniej\\QuizApp\\QuizApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj",
+        "projectUniqueName": "C:\\ProjektZespolowy\\teleturniej\\QuizApp\\QuizApp.csproj",
         "projectName": "QuizApp",
-        "projectPath": "C:\\GitHub\\quiz-app\\QuizApp\\QuizApp.csproj",
-        "packagesPath": "C:\\Users\\arekd\\.nuget\\packages\\",
-        "outputPath": "C:\\GitHub\\quiz-app\\QuizApp\\obj\\",
+        "projectPath": "C:\\ProjektZespolowy\\teleturniej\\QuizApp\\QuizApp.csproj",
+        "packagesPath": "C:\\Users\\Małgorzata\\.nuget\\packages\\",
+        "outputPath": "C:\\ProjektZespolowy\\teleturniej\\QuizApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\arekd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Małgorzata\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,26 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.11, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.4, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.0.0-preview8-19413-06, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

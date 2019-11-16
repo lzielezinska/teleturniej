@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Owin;
+using Microsoft.Owin;
+[assembly: OwinStartup(typeof(QuizApp.Startup))]
 namespace QuizApp
 {
     public class Startup
@@ -16,6 +18,7 @@ namespace QuizApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -24,6 +27,7 @@ namespace QuizApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +47,11 @@ namespace QuizApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<GameHub>("/gameHub");
+            });
 
             app.UseAuthorization();
 

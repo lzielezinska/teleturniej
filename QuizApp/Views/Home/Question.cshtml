@@ -1,0 +1,24 @@
+﻿
+@{
+	var question = "Pytanie";
+	var answers = new string[] { "Odp. A", "Odp. B", "Odp. C", "Odp. D" };
+}
+
+<div class="card">
+	<div class="card-title">
+		@question
+	</div>
+	<div class="d-flex flex-wrap">
+		@foreach (var answer in answers)
+		{
+			<div class="p-2 col-md-6 col-12">
+				<div class="card answer-card" onclick="selectAnswer('@answer')">
+					@answer
+				</div>
+			</div>
+		}
+	</div>
+	<div class="ml-auto p-2">
+		<button type="button" class="btn btn-success">Następne</button>
+	</div>
+</div>

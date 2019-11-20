@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using Owin;
-using Microsoft.Owin;
-[assembly: OwinStartup(typeof(QuizApp.Startup))]
+using QuizApp.Data;
+//using Owin;
+//using Microsoft.Owin;
+//[assembly: OwinStartup(typeof(QuizApp.Startup))]
 namespace QuizApp
 {
     public class Startup
@@ -27,7 +29,9 @@ namespace QuizApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSignalR();
+            //services.AddSignalR();
+            services.AddDbContext<QuizDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("QuizAppContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,10 +52,10 @@ namespace QuizApp
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<GameHub>("/gameHub");
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapHub<GameHub>("/gameHub");
+            //});
 
             app.UseAuthorization();
 

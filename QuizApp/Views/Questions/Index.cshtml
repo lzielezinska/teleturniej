@@ -8,7 +8,7 @@
         @foreach (var answer in Model.Answers)
         {
             <div class="p-2 col-md-6 col-12">
-                <div class="card answer-card" onclick="selectAnswer('@answer.Content')">
+                <div class="card answer-card" value="@Html.Raw(answer.IsCorrect)">
                     @answer.Content
                 </div>
             </div>

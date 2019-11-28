@@ -9,6 +9,8 @@ namespace QuizApp.Models
         [Required]
         [StringLength(20, MinimumLength = 3)]
         public string Content { get; set; }
+        public int QuizID { get; set; }
+        public Quiz Quiz { get; set; }
         public List<Answer> Answers { get; set; }
     }
 }

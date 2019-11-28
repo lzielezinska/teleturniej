@@ -11,6 +11,8 @@ namespace QuizApp.Models
         [Required]
         [StringLength(20, MinimumLength = 3)]
         public string Content { get; set; }
+        [Required]
+        public bool IsCorrect { get; set; }
         public int QuestionID { get; set; }
         public Question Question { get; set; }
     }

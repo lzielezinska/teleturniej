@@ -26,6 +26,9 @@ namespace QuizApp.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(20);
 
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("QuestionID")
                         .HasColumnType("INTEGER");
 
@@ -47,9 +50,30 @@ namespace QuizApp.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(20);
 
+                    b.Property<int>("QuizID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("QuizID");
+
                     b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("QuizApp.Models.Quiz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Quiz");
                 });
 
             modelBuilder.Entity("QuizApp.Models.Answer", b =>
@@ -57,6 +81,15 @@ namespace QuizApp.Migrations
                     b.HasOne("QuizApp.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QuizApp.Models.Question", b =>
+                {
+                    b.HasOne("QuizApp.Models.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

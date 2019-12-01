@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using QuizApp.Data;
+using QuizApp.Data.Repositories;
 //using Owin;
 //using Microsoft.Owin;
 //[assembly: OwinStartup(typeof(QuizApp.Startup))]
@@ -28,6 +29,7 @@ namespace QuizApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddControllersWithViews();
             //services.AddSignalR();
             services.AddDbContext<QuizDbContext>(options =>

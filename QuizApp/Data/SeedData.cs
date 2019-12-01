@@ -14,7 +14,7 @@ namespace QuizApp.Data
                 serviceProvider.GetRequiredService<
                     DbContextOptions<QuizDbContext>>()))
             {
-                // Look for any movies.
+                // Look for any questions.
                 if (context.Question.Any())
                 {
                     return;   // DB has been seeded
@@ -26,9 +26,9 @@ namespace QuizApp.Data
                 context.SaveChanges();
 
                 context.Question.AddRange(
-                    new Question{Content = "My husband ……………… the car every Saturday.", QuizID = 1},
-                    new Question{Content = "You ……………………… your socks on the floor, I just can’t stand it!", QuizID = 1},
-                    new Question {Content = "\"Whose bag is this?\" \"Oh, it ……… to me. I’ll take it if it is blocking the way.\"", QuizID = 1 },
+                    new Question { Content = "My husband ……………… the car every Saturday.", QuizID = 1 },
+                    new Question { Content = "You ……………………… your socks on the floor, I just can’t stand it!", QuizID = 1 },
+                    new Question { Content = "\"Whose bag is this?\" \"Oh, it ……… to me. I’ll take it if it is blocking the way.\"", QuizID = 1 },
                     new Question { Content = "I’ve always dreamt ………………… Australia.", QuizID = 1 },
                     new Question { Content = "That’s the first time someone ………………… something so rude to me!", QuizID = 1 },
                     new Question { Content = "…………………………… films on Netflix for the last six hours? Turn it off and get some exercise!", QuizID = 1 },
@@ -40,15 +40,15 @@ namespace QuizApp.Data
                 context.SaveChanges();
 
                 context.Answer.AddRange(
-                    new Answer{Content = "is washing", QuestionID = 1},
-                    new Answer{Content = "wash", QuestionID = 1},
-                    new Answer{Content = " washes", QuestionID = 1, IsCorrect = true},
-                    new Answer{Content = "is wash", QuestionID = 1},
-                    new Answer{Content = "are always leaving", QuestionID = 2, IsCorrect = true },
-                    new Answer{Content = "was always leaving", QuestionID = 2},
-                    new Answer{Content = "always leave", QuestionID = 2},
-                    new Answer{Content = "have always been left", QuestionID = 2},
-                    new Answer { Content = "is belonging", QuestionID = 3},
+                    new Answer { Content = "is washing", QuestionID = 1 },
+                    new Answer { Content = "wash", QuestionID = 1 },
+                    new Answer { Content = " washes", QuestionID = 1, IsCorrect = true },
+                    new Answer { Content = "is wash", QuestionID = 1 },
+                    new Answer { Content = "are always leaving", QuestionID = 2, IsCorrect = true },
+                    new Answer { Content = "was always leaving", QuestionID = 2 },
+                    new Answer { Content = "always leave", QuestionID = 2 },
+                    new Answer { Content = "have always been left", QuestionID = 2 },
+                    new Answer { Content = "is belonging", QuestionID = 3 },
                     new Answer { Content = "has belonged", QuestionID = 3 },
                     new Answer { Content = "belongs", QuestionID = 3, IsCorrect = true },
                     new Answer { Content = "is belonged", QuestionID = 3 },

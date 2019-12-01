@@ -6,32 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuizApp.Data;
+using QuizApp.Data.Repositories;
 using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
     public class QuestionsController : Controller
     {
-        private readonly QuizDbContext _context;
+        private IRepositoryWrapper _repoWrapper;
 
-        public QuestionsController(QuizDbContext context)
+        public QuestionsController(IRepositoryWrapper repoWrapper)
         {
-            _context = context;
+            _repoWrapper = repoWrapper;
         }
 
         // GET: Questions
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? id)
         {
-            QuestionAnswers model = new QuestionAnswers();
+            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
 
-            int questionId = 1;
-
-            var question = await _context.Question
-                .FirstOrDefaultAsync(m => m.Id == questionId);
-            var answers = _context.Answer
-                .Include(x => x.Question)
-                .Where(x => x.QuestionID == questionId)
-                .ToList();
+            var question = _repoWrapper.Question.GetByCondition(m => m.Id == id).FirstOrDefault();
+            var answers = _repoWrapper.Answer.GetByCondition(x => x.QuestionID == id).ToList();
 
             model.Question = question;
             model.Answers = answers;

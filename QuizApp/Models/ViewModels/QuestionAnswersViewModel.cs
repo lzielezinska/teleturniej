@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace QuizApp.Models
 {
-    public class QuestionAnswers
+    public class QuestionAnswersViewModel
     {
         public Question Question;
-        public List<Answer> Answers;
+        public IList<Answer> Answers;
     }
 }

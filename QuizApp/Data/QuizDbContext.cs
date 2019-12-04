@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using QuizApp.Models;
 
 namespace QuizApp.Data
 {
-    public class QuizDbContext : DbContext
+    public class QuizDbContext : IdentityDbContext
     {
-        public QuizDbContext (DbContextOptions<QuizDbContext> options)
+        public QuizDbContext(DbContextOptions<QuizDbContext> options)
             : base(options)
         {
         }
 
-    public DbSet<Question> Question { get; set; }
-    public DbSet<Answer> Answer { get; set; }
-    public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<Answer> Answer { get; set; }
+        public DbSet<Quiz> Quiz { get; set; }
     }
 }

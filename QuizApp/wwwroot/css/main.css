@@ -1,17 +1,119 @@
 ﻿.answer-card {
-	height: 250px;
-	background-color: lightgrey;
+	height: 100px;
+	background-color: lightgrey!important;
+    max-width: 200px;
 }
 
 .answer-card:hover {
 	cursor: pointer;
-	background-color: grey;
+	background-color: var(--grey-color)!important;
 }
 
 .correct-answer {
-    background-color: green;
+    background-color: green !important;
+    color: white;
+}
+
+.correct-answer:hover {
+    background-color: green !important;
 }
 
 .wrong-answer {
-    background-color: red;
+    background-color: var(--secondary-color) !important;
+    color: white;
+}
+
+.wrong-answer:hover {
+    background-color: var(--secondary-color) !important;
+}
+
+.toolbar {
+    height: var(--toolbar-size);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.main {
+    transition: margin-left .5s;
+    height: calc(100vh - var(--toolbar-size));
+    overflow: auto;
+}
+
+.btn-white {
+    background-color: white !important;
+    color: var(--secondary-color) !important;
+    font-weight: bold !important;
+}
+
+.btn-green {
+    background-color: green !important;
+    color: white !important;
+}
+
+.btn-logout {
+    color: black!important;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+}
+
+.dropdown-menu > a:hover {
+    background-color: var(--grey-color) !important;
+}
+
+.title {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.title:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.menu-icon {
+    font-size: 1.3rem !important;
+    cursor: pointer;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    border: 2px solid white;
+}
+
+.sidenav a:hover {
+        color: #f1f1f1;
+        text-decoration: none;
+        background-color: var(--grey-color);
+        color: black;
+}
+
+.sidenav-icon {
+    top: 0;
+    color: white;
+}
+
+:root {
+    --primary-color: #01579b;
+    --secondary-color: #b71c1c;
+    --grey-color: #bdbdbd;
+    --toolbar-size: 56px;
 }

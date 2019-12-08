@@ -11,3 +11,18 @@ $('.card.answer-card').click(function () {
     });
 });
 
+const openNav = () => {
+    const sidenav = document.getElementById('mySidenav').style;
+    sidenav.width = '250px';
+    sidenav.paddingLeft = '20px';
+    sidenav.paddingRight = '20px';
+    document.getElementById('main').style.marginLeft = '250px';
+};
+
+const closeNav = () => {
+    const sidenav = document.getElementById('mySidenav').style;
+    sidenav.width = '0';
+    sidenav.paddingLeft = '0';
+    sidenav.paddingRight = '0';
+    document.getElementById('main').style.marginLeft = '0';
+};

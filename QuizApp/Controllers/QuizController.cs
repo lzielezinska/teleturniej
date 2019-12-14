@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuizApp.Data.Repositories;
@@ -18,6 +19,7 @@ namespace QuizApp.Controllers
             _repoWrapper = repoWrapper;
         }
 
+        [Authorize(Roles = "Lecturer")]
         // GET: Quiz
         public ActionResult Index()
         {
@@ -26,7 +28,8 @@ namespace QuizApp.Controllers
             return View(model);
         }
 
-       public ActionResult GeneratePIN(int id)
+        [Authorize(Roles = "Lecturer")]
+        public ActionResult GeneratePIN(int id)
         {
             Random rnd = new Random();
             GeneratePINViewModel model = new GeneratePINViewModel();

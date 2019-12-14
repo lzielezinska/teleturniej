@@ -8,7 +8,7 @@ namespace QuizApp.Models.Services
     public interface IQuizService
     {
         Quiz GetQuizByID(int quizId);
-        List<Quiz> GetAll();
+        IList<Quiz> GetAll();
         void CreateQuiz(Quiz quiz);
         void UpdateQuiz(Quiz quiz);
         void DeleteQuizByID(int quizId);

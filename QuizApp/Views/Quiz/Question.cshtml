@@ -1,7 +1,7 @@
 ﻿@model QuizApp.Models.QuestionAnswersViewModel
 
 @{
-    var linkToNextQuestion = Url.RouteUrl("quiz-question", new { controller = "Quiz", Action = "Question", quizId = Model.Question.QuizID, numberOfQuestion = Model.NextQuestionNumber });
+    var linkToNextQuestion = Url.RouteUrl("quiz-question", new { controller = "Quiz", Action = "Question", quizId = Model.Question.QuizID, numberOfQuestion = ViewBag.ID + 1 });
 }
 
 <div class="card p-3">
@@ -41,6 +41,13 @@
         }
     </div>
     <div class="ml-auto p-2">
-        <a class="btn btn-green" href="@linkToNextQuestion">Następne</a>
+        @if (Model.IsAnswerFinal)
+        {
+            <a class="btn btn-green" asp-controller="Home" asp-action="Index">Zapisz odpowiedzi</a>
+        }
+        else
+        {
+            <a class="btn btn-green" href="@linkToNextQuestion">Następne</a>
+        }
     </div>
 </div>

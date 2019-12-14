@@ -63,7 +63,10 @@ namespace QuizApp.Controllers
 
             model.Question = question;
             model.Answers = answers;
-            model.NextQuestionNumber = numberOfQuestion + 1;
+            model.IsAnswerFinal = false;
+            if (numberOfQuestion == quizQuestions.Count) model.IsAnswerFinal = true;
+
+            ViewBag.ID = numberOfQuestion;
 
             return View(model);
         }

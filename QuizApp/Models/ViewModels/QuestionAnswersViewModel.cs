@@ -8,7 +8,7 @@ namespace QuizApp.Models
     public class QuestionAnswersViewModel
     {
         public Question Question { get; set; }
-        public int NextQuestionNumber { get; set; }
         public IList<Answer> Answers { get; set; }
+        public Boolean IsAnswerFinal { get; set; }
     }
 }

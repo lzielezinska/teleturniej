@@ -40,30 +40,7 @@
         <div class="sidenav-icon ml-1 mt-3">
             <i class="fas fa-bars menu-icon" onclick="closeNav()"></i>
         </div>
-        <a class="mt-3 mb-1 d-flex" href="#">
-            <div class="col-1">
-                <i class="fab fa-buromobelexperte"></i>
-            </div>
-            <div class="col-11">
-                PIN
-            </div>
-        </a>
-        <a class="my-1 d-flex" href="#">
-            <div class="col-1">
-                <i class="fas fa-trophy"></i>
-            </div>
-            <div class="col-11">
-                OSIĄGNIĘCIA
-            </div>
-        </a>
-        <a class="my-1 d-flex" asp-controller="Questions" asp-action="Index" asp-route-id="1">
-            <div class="col-1">
-                <i class="fas fa-question"></i>
-            </div>
-            <div class="col-11">
-                PYTANIA
-            </div>
-        </a>
+        <partial name="_MenuPartial"/>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

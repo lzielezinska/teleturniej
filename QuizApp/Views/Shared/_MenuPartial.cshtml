@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole("User"))
+    {
+        <a class="mt-3 mb-1 d-flex" href="#">
+            <div class="col-1">
+                <i class="fab fa-buromobelexperte"></i>
+            </div>
+            <div class="col-11">
+                PIN
+            </div>
+        </a>
+        <a class="my-1 d-flex" href="#">
+            <div class="col-1">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="col-11">
+                OSIĄGNIĘCIA
+            </div>
+        </a>
+        <a class="my-1 d-flex" asp-controller="Questions" asp-action="Index" asp-route-id="1">
+            <div class="col-1">
+                <i class="fas fa-question"></i>
+            </div>
+            <div class="col-11">
+                PYTANIA
+            </div>
+        </a>
+    }
+    else if (User.IsInRole("Lecturer"))
+    {
+        <a class="mt-3 mb-1 d-flex" asp-controller="Quiz" asp-action="Index">
+            <div class="col-1">
+                <i class="fas fa-question"></i>
+            </div>
+            <div class="col-11">
+                QUIZY
+            </div>
+        </a>
+        <a class="my-1 d-flex" href="#">
+            <div class="col-1">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="col-11">
+                RANKINGI
+            </div>
+        </a>
+    }
+}
+else
+{
+    <div class="mt-3 mb-1 text-white">
+        <span>
+            Sekcja dostępna dla zalogowanych użytkowników.
+        </span>
+        <br />
+        <span>
+            Proszę się zalogować lub utworzyć konto.
+        </span>
+    </div>
+}

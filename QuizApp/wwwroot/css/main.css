@@ -111,6 +111,20 @@
     color: white;
 }
 
+.thead-primary {
+    background-color: #002f6c;
+    color: white;
+}
+
+.table-grey-hover:hover {
+    background-color: var(--grey-color);
+}
+
+.pin-code {
+    font-size: 15vw;
+    font-weight: bold;
+}
+
 :root {
     --primary-color: #01579b;
     --secondary-color: #b71c1c;

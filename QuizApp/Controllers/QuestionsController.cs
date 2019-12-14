@@ -22,20 +22,5 @@ namespace QuizApp.Controllers
             _questionService = questionService;
             _answerService = answerService;
         }
-
-        // GET: Questions
-        [Authorize(Roles = "User")]
-        public IActionResult Index(int id)
-        {
-            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
-
-            var question = _questionService.GetQuestionByID(id);
-            var answers = _answerService.GetAnswersByQuestionID(id);
-
-            model.Question = question;
-            model.Answers = answers;
-
-            return View(model);
-        }
     }
 }

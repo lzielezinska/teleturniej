@@ -13,15 +13,21 @@ namespace QuizApp.Controllers
     public class QuizController : Controller
     {
         private IQuizService _quizService;
+        private IQuestionService _questionService;
+        private IAnswerService _answerService;
 
-        public QuizController(IQuizService quizService)
+        public QuizController(IQuizService quizService, 
+            IQuestionService questionService, 
+            IAnswerService answerService)
         {
             _quizService = quizService;
+            _questionService = questionService;
+            _answerService = answerService;
         }
 
         [Authorize(Roles = "Lecturer")]
         // GET: Quiz
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var model = _quizService.GetAll();
 
@@ -29,7 +35,7 @@ namespace QuizApp.Controllers
         }
 
         [Authorize(Roles = "Lecturer")]
-        public ActionResult GeneratePIN(int id)
+        public IActionResult GeneratePIN(int id)
         {
             Random rnd = new Random();
             GeneratePINViewModel model = new GeneratePINViewModel();
@@ -42,6 +48,22 @@ namespace QuizApp.Controllers
 
             string resultPin = string.Join("", pin);
             model.pin = resultPin;
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "User")]
+        public IActionResult Question(int quizId, int numberOfQuestion)
+        {
+            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
+
+            var quizQuestions = _questionService.GetQuestionsByQuizID(quizId);
+            var question = quizQuestions.ElementAt(numberOfQuestion - 1);
+            var answers = _answerService.GetAnswersByQuestionID(question.Id);
+
+            model.Question = question;
+            model.Answers = answers;
+            model.NextQuestionNumber = numberOfQuestion + 1;
 
             return View(model);
         }

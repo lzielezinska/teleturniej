@@ -5,25 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using QuizApp.Data.Repositories;
 using QuizApp.Models;
+using QuizApp.Models.Services;
 
 namespace QuizApp.Controllers
 {
     public class QuizController : Controller
     {
-        private IRepositoryWrapper _repoWrapper;
+        private IQuizService _quizService;
 
-        public QuizController(IRepositoryWrapper repoWrapper)
+        public QuizController(IQuizService quizService)
         {
-            _repoWrapper = repoWrapper;
+            _quizService = quizService;
         }
 
         [Authorize(Roles = "Lecturer")]
         // GET: Quiz
         public ActionResult Index()
         {
-            var model = _repoWrapper.Quiz.GetAll();
+            var model = _quizService.GetAll();
 
             return View(model);
         }

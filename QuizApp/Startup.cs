@@ -11,11 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using QuizApp.Data;
-using QuizApp.Data.Repositories;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using QuizApp.Services;
+using QuizApp.Models.Services;
 //using Owin;
 //using Microsoft.Owin;
 //[assembly: OwinStartup(typeof(QuizApp.Startup))]
@@ -53,8 +53,11 @@ namespace QuizApp
                 .AddUserManager<UserManager<IdentityUser>>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IQuizService, QuizService>();
+
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             //services.AddSignalR();
@@ -86,6 +89,9 @@ namespace QuizApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "quiz-question",
+                    pattern: "{controller=Quiz}/{quizId}/{action=Question}/{numberOfQuestion}");
                 endpoints.MapRazorPages();
             });
         }

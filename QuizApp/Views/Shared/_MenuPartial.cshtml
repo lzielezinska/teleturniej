@@ -3,6 +3,11 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@{
+    var linkToQuestion = Url.RouteUrl("quiz-question", new { controller = "Quiz", Action = "Question", quizId = 1, numberOfQuestion = 1 });
+}
+
+
 @if (SignInManager.IsSignedIn(User))
 {
     @if (User.IsInRole("User"))
@@ -23,7 +28,7 @@
                 OSIĄGNIĘCIA
             </div>
         </a>
-        <a class="my-1 d-flex" asp-controller="Questions" asp-action="Index" asp-route-id="1">
+        <a class="my-1 d-flex" href="@linkToQuestion">
             <div class="col-1">
                 <i class="fas fa-question"></i>
             </div>

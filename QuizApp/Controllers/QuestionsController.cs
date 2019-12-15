@@ -2,36 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuizApp.Data;
-using QuizApp.Data.Repositories;
 using QuizApp.Models;
+using QuizApp.Models.Services;
 
 namespace QuizApp.Controllers
 {
     public class QuestionsController : Controller
     {
-        private IRepositoryWrapper _repoWrapper;
+        private IQuestionService _questionService;
+        private IAnswerService _answerService;
 
-        public QuestionsController(IRepositoryWrapper repoWrapper)
+        public QuestionsController(IQuestionService questionService, IAnswerService answerService)
         {
-            _repoWrapper = repoWrapper;
-        }
-
-        // GET: Questions
-        public IActionResult Index(int? id)
-        {
-            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
-
-            var question = _repoWrapper.Question.GetByCondition(m => m.Id == id).FirstOrDefault();
-            var answers = _repoWrapper.Answer.GetByCondition(x => x.QuestionID == id).ToList();
-
-            model.Question = question;
-            model.Answers = answers;
-
-            return View(model);
+            _questionService = questionService;
+            _answerService = answerService;
         }
     }
 }

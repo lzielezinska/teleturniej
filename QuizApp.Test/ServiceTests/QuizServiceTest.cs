@@ -10,6 +10,19 @@ namespace QuizApp.Test.ServiceTests
 {
     public class QuizServiceTest
     {
+        private static void Add_example_recorods(DbContextOptions<QuizDbContext> options)
+        {
+            using (var context = new QuizDbContext(options))
+            {
+                var service = new QuizService(context);
+                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
+                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
+
+                service.CreateQuiz(q1);
+                service.CreateQuiz(q2);
+            }
+        }
+
         [Fact]
         public void Add_quiz_to_database()
         {
@@ -17,18 +30,11 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Add_quiz_to_database")
                 .Options;
 
-            using (var context = new QuizDbContext(options))
-            {
-                var service = new QuizService(context);
-                Quiz example_quiz = new Quiz { Name = "AAA" };
-                service.CreateQuiz(example_quiz);
-                context.SaveChanges();
-            }
+            Add_example_recorods(options);
 
             using (var context = new QuizDbContext(options))
             {
-                Assert.Equal(1, context.Quiz.Count());
-                Assert.Equal("AAA", context.Quiz.Single().Name);
+                Assert.Equal(2, context.Quiz.Count());
             }
         }
 
@@ -39,17 +45,7 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Delete_quiz_from_database")
                 .Options;
 
-            using (var context = new QuizDbContext(options))
-            {
-                var service = new QuizService(context);
-                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
-                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
-
-                service.CreateQuiz(q1);
-                service.CreateQuiz(q2);
-
-                context.SaveChanges();
-            }
+            Add_example_recorods(options);
 
             using (var context = new QuizDbContext(options))
             {
@@ -67,17 +63,7 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Get_all_quizes_from_database")
                 .Options;
 
-            using (var context = new QuizDbContext(options))
-            {
-                var service = new QuizService(context);
-                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
-                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
-
-                service.CreateQuiz(q1);
-                service.CreateQuiz(q2);
-
-                context.SaveChanges();
-            }
+            Add_example_recorods(options);
 
             using (var context = new QuizDbContext(options))
             {
@@ -87,7 +73,6 @@ namespace QuizApp.Test.ServiceTests
                 Assert.Equal("AAA", actual[0].Name);
                 Assert.Equal("BBB", actual[1].Name);
                 Assert.Equal(2, actual.Count());
-
             }
         }
 
@@ -98,17 +83,7 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Get_quiz_id_from_database")
                 .Options;
 
-            using (var context = new QuizDbContext(options))
-            {
-                var service = new QuizService(context);
-                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
-                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
-
-                service.CreateQuiz(q1);
-                service.CreateQuiz(q2);
-
-                context.SaveChanges();
-            }
+            Add_example_recorods(options);
 
             using (var context = new QuizDbContext(options))
             {
@@ -127,17 +102,7 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Update_quiz")
                 .Options;
 
-            using (var context = new QuizDbContext(options))
-            {
-                var service = new QuizService(context);
-                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
-                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
-
-                service.CreateQuiz(q1);
-                service.CreateQuiz(q2);
-
-                context.SaveChanges();
-            }
+            Add_example_recorods(options);
 
             using (var context = new QuizDbContext(options))
             {

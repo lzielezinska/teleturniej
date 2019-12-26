@@ -14,12 +14,9 @@ namespace QuizApp.Test
         {
             using (var context = new QuizDbContext(options))
             {
-                var service = new QuestionService(context);
-                Question q1 = new Question { Content = "AAA", QuizID = 12, Id = 1 };
-                Question q2 = new Question { Content = "BBB", QuizID = 13, Id = 2 };
-
-                service.CreateQuestion(q1);
-                service.CreateQuestion(q2);
+                context.Question.Add(new Question { Content = "AAA", QuizID = 12, Id = 1 });
+                context.Question.Add(new Question { Content = "BBB", QuizID = 13, Id = 2 });
+                context.SaveChanges();
             }
         }
 
@@ -30,8 +27,16 @@ namespace QuizApp.Test
                 .UseInMemoryDatabase(databaseName: "Add_question_to_database")
                 .Options;
 
-            Add_example_records(options);
-  
+            using (var context = new QuizDbContext(options))
+            {
+                var service = new QuestionService(context);
+                Question q1 = new Question { Content = "AAA", QuizID = 12, Id = 1 };
+                Question q2 = new Question { Content = "BBB", QuizID = 13, Id = 2 };
+
+                service.CreateQuestion(q1);
+                service.CreateQuestion(q2);
+            }
+
             using (var context = new QuizDbContext(options))
             {
                 Assert.Equal(2, context.Question.Count());

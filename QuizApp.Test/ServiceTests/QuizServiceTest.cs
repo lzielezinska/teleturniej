@@ -14,12 +14,9 @@ namespace QuizApp.Test.ServiceTests
         {
             using (var context = new QuizDbContext(options))
             {
-                var service = new QuizService(context);
-                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
-                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
-
-                service.CreateQuiz(q1);
-                service.CreateQuiz(q2);
+                context.Quiz.Add(new Quiz { Name = "AAA", Id = 1 });
+                context.Quiz.Add(new Quiz { Name = "BBB", Id = 2 });
+                context.SaveChanges();
             }
         }
 
@@ -30,7 +27,15 @@ namespace QuizApp.Test.ServiceTests
                 .UseInMemoryDatabase(databaseName: "Add_quiz_to_database")
                 .Options;
 
-            Add_example_recorods(options);
+            using (var context = new QuizDbContext(options))
+            {
+                var service = new QuizService(context);
+                Quiz q1 = new Quiz { Name = "AAA", Id = 1 };
+                Quiz q2 = new Quiz { Name = "BBB", Id = 2 };
+
+                service.CreateQuiz(q1);
+                service.CreateQuiz(q2);
+            }
 
             using (var context = new QuizDbContext(options))
             {

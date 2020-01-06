@@ -43,6 +43,7 @@ namespace QuizApp.Controllers
         }
 
         [Authorize(Roles = "User")]
+        [Route("Quiz/{quizId}/Question/{numberOfQuestion}", Name = "QuestionView")]
         public IActionResult Question(int quizId, int numberOfQuestion)
         {
             var question = _questionService.GetCurrentQuestion(quizId, numberOfQuestion);

@@ -89,9 +89,9 @@ namespace QuizApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name: "quiz-question",
-                    pattern: "{controller=Quiz}/{quizId}/{action=Question}/{numberOfQuestion}");
+                //endpoints.MapControllerRoute(
+                //    name: "quiz-question",
+                //    pattern: "{controller=Quiz}/{quizId}/{action=Question}/{numberOfQuestion}");
                 endpoints.MapRazorPages();
             });
         }

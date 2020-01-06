@@ -37,17 +37,7 @@ namespace QuizApp.Controllers
         [Authorize(Roles = "Lecturer")]
         public IActionResult GeneratePIN(int id)
         {
-            Random rnd = new Random();
-            GeneratePINViewModel model = new GeneratePINViewModel();
-
-            int[] pin = new int[6];
-            for (int i = 0; i < 6; i++)
-            {
-                pin[i] = rnd.Next(0, 10);
-            }
-
-            string resultPin = string.Join("", pin);
-            model.pin = resultPin;
+            GeneratePINViewModel model = _quizService.GeneratePIN(id);
 
             return View(model);
         }

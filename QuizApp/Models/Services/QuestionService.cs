@@ -36,6 +36,7 @@ namespace QuizApp.Models.Services
             var questions = _context.Question.Where(x => x.QuizID == quizId).OrderBy(x => x.Id);
             var lastQuestionId = questions.LastOrDefault()?.Id;
             // ElementAt() is not supported for entities, had to do Skip().First()
+            // https://docs.microsoft.com/pl-pl/dotnet/framework/data/adonet/ef/language-reference/supported-and-unsupported-linq-methods-linq-to-entities
             var currentQuestion = questions.Include(e => e.Answers).Skip(questionIndex).FirstOrDefault();
 
             return new QuestionAnswersViewModel

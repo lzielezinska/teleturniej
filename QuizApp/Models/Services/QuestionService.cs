@@ -1,4 +1,5 @@
-﻿using QuizApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,21 @@ namespace QuizApp.Models.Services
                 _context.Question.Remove(question);
                 _context.SaveChanges();
             }
+        }
+
+        public QuestionAnswersViewModel GetCurrentQuestion(int quizId, int questionIndex)
+        {
+            var questions = _context.Question.Where(x => x.QuizID == quizId).OrderBy(x => x.Id);
+            var lastQuestionId = questions.LastOrDefault()?.Id;
+            // ElementAt() is not supported for entities, had to do Skip().First()
+            // https://docs.microsoft.com/pl-pl/dotnet/framework/data/adonet/ef/language-reference/supported-and-unsupported-linq-methods-linq-to-entities
+            var currentQuestion = questions.Include(e => e.Answers).Skip(questionIndex).FirstOrDefault();
+
+            return new QuestionAnswersViewModel
+            {
+                Question = currentQuestion,
+                IsAnswerFinal = lastQuestionId == currentQuestion.Id
+            };
         }
 
         public Question GetQuestionByID(int questionId)

@@ -12,5 +12,6 @@ namespace QuizApp.Models.Services
         void CreateQuestion(Question question);
         void UpdateQuestion(Question question);
         void DeleteQuestionByID(int questionId);
+        QuestionAnswersViewModel GetCurrentQuestion(int quizId, int questionIndex);
     }
 }

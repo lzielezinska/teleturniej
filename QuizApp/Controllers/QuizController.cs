@@ -55,20 +55,11 @@ namespace QuizApp.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Question(int quizId, int numberOfQuestion)
         {
-            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
-
-            var quizQuestions = _questionService.GetQuestionsByQuizID(quizId);
-            var question = quizQuestions.ElementAt(numberOfQuestion - 1);
-            var answers = _answerService.GetAnswersByQuestionID(question.Id);
-
-            model.Question = question;
-            model.Answers = answers;
-            model.IsAnswerFinal = false;
-            if (numberOfQuestion == quizQuestions.Count) model.IsAnswerFinal = true;
+            var question = _questionService.GetCurrentQuestion(quizId, numberOfQuestion);
 
             ViewBag.ID = numberOfQuestion;
 
-            return View(model);
+            return View(question);
         }
     }
 }

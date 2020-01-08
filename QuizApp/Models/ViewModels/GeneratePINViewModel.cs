@@ -7,6 +7,6 @@ namespace QuizApp.Models
 {
     public class GeneratePINViewModel
     {
-        public String pin { get; set; }
+        public string PIN { get; set; }
     }
 }

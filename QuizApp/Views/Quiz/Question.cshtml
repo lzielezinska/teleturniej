@@ -1,7 +1,7 @@
 ﻿@model QuizApp.Models.QuestionAnswersViewModel
 
 @{
-    var linkToNextQuestion = Url.RouteUrl("quiz-question", new { controller = "Quiz", Action = "Question", quizId = Model.Question.QuizID, numberOfQuestion = ViewBag.ID + 1 });
+    var linkToNextQuestion = Url.RouteUrl("QuestionView", new { quizId = Model.Question.QuizID, numberOfQuestion = ViewBag.ID + 1 });
 }
 
 <div class="card p-3">
@@ -12,7 +12,7 @@
         @{
             int i = 0;
         }
-        @foreach (var answer in Model.Answers)
+        @foreach (var answer in Model.Question.Answers)
         {
             <div class="col-sm-6 col-12">
                 @if (i % 2 == 0)
@@ -37,7 +37,7 @@
                 }
 
             </div>
-            { i = i + 1; }
+            { i++; }
         }
     </div>
     <div class="ml-auto p-2">

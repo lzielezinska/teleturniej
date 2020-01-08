@@ -37,38 +37,20 @@ namespace QuizApp.Controllers
         [Authorize(Roles = "Lecturer")]
         public IActionResult GeneratePIN(int id)
         {
-            Random rnd = new Random();
-            GeneratePINViewModel model = new GeneratePINViewModel();
-
-            int[] pin = new int[6];
-            for (int i = 0; i < 6; i++)
-            {
-                pin[i] = rnd.Next(0, 10);
-            }
-
-            string resultPin = string.Join("", pin);
-            model.pin = resultPin;
+            GeneratePINViewModel model = _quizService.GeneratePIN(id);
 
             return View(model);
         }
 
         [Authorize(Roles = "User")]
+        [Route("Quiz/{quizId}/Question/{numberOfQuestion}", Name = "QuestionView")]
         public IActionResult Question(int quizId, int numberOfQuestion)
         {
-            QuestionAnswersViewModel model = new QuestionAnswersViewModel();
-
-            var quizQuestions = _questionService.GetQuestionsByQuizID(quizId);
-            var question = quizQuestions.ElementAt(numberOfQuestion - 1);
-            var answers = _answerService.GetAnswersByQuestionID(question.Id);
-
-            model.Question = question;
-            model.Answers = answers;
-            model.IsAnswerFinal = false;
-            if (numberOfQuestion == quizQuestions.Count) model.IsAnswerFinal = true;
+            var question = _questionService.GetCurrentQuestion(quizId, numberOfQuestion);
 
             ViewBag.ID = numberOfQuestion;
 
-            return View(model);
+            return View(question);
         }
     }
 }

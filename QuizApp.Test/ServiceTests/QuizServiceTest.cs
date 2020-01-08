@@ -5,6 +5,8 @@ using QuizApp.Models;
 using QuizApp.Models.Services;
 using Xunit;
 using System.Linq;
+using FluentAssertions;
+
 
 namespace QuizApp.Test.ServiceTests
 {
@@ -39,7 +41,8 @@ namespace QuizApp.Test.ServiceTests
 
             using (var context = new QuizDbContext(options))
             {
-                Assert.Equal(2, context.Quiz.Count());
+                var numberOfQuizesInDb = context.Quiz.Count();
+                numberOfQuizesInDb.Should().Be(2);
             }
         }
 
@@ -56,9 +59,12 @@ namespace QuizApp.Test.ServiceTests
             {
                 var service = new QuizService(context);
                 service.DeleteQuizByID(1);
-                Assert.Equal(1, context.Quiz.Count());
-                Assert.Equal("BBB", context.Quiz.Single().Name);
-                Assert.Equal(2, context.Quiz.Single().Id);
+
+                var numberOfQuizesInDb = context.Quiz.Count();
+                var idOfLastedQuiz = context.Quiz.Single().Id;
+
+                numberOfQuizesInDb.Should().Be(1);
+                idOfLastedQuiz.Should().Be(2);
             }
         }
         [Fact]
@@ -75,14 +81,14 @@ namespace QuizApp.Test.ServiceTests
                 var service = new QuizService(context);
                 var actual = service.GetAll();
 
-                Assert.Equal("AAA", actual[0].Name);
-                Assert.Equal("BBB", actual[1].Name);
-                Assert.Equal(2, actual.Count());
+                var numberOfQuizes = actual.Count();
+
+                numberOfQuizes.Should().Be(2);
             }
         }
 
         [Fact]
-        public void Get_quiz_id_from_database()
+        public void Get_quiz_by_id_from_database()
         {
             var options = new DbContextOptionsBuilder<QuizDbContext>()
                 .UseInMemoryDatabase(databaseName: "Get_quiz_id_from_database")
@@ -93,9 +99,9 @@ namespace QuizApp.Test.ServiceTests
             using (var context = new QuizDbContext(options))
             {
                 var service = new QuizService(context);
-                var actual = service.GetQuizByID(1);
+                var nameOfQuizWithIdEquals1 = service.GetQuizByID(1).Name;
 
-                Assert.Equal("AAA", actual.Name);
+                nameOfQuizWithIdEquals1.Should().Be("AAA");
             }
         }
 
@@ -115,8 +121,12 @@ namespace QuizApp.Test.ServiceTests
                 Quiz q1 = new Quiz { Name = "AAB",  Id = 1 };
                 service.UpdateQuiz(q1);
 
-                Assert.Equal(2, context.Quiz.Count());
-                Assert.Equal("AAB", context.Quiz.FirstOrDefault(x => x.Id == 1).Name);
+                var numberOfQuizesInDb = context.Quiz.Count();
+                var nameOfUpdatedQuiz = context.Quiz.FirstOrDefault((x => x.Id == 1)).Name;
+
+                numberOfQuizesInDb.Should().Be(2);
+                nameOfUpdatedQuiz.Should().Be("AAB");
+
             }
         }
     }

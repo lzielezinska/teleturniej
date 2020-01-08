@@ -1,10 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using QuizApp.Data;
 using QuizApp.Models;
 using QuizApp.Models.Services;
 using Xunit;
 using System.Linq;
+using FluentAssertions;
+
 
 
 namespace QuizApp.Test.ServiceTests
@@ -40,7 +41,8 @@ namespace QuizApp.Test.ServiceTests
 
             using (var context = new QuizDbContext(options))
             {
-                Assert.Equal(2, context.Answer.Count());
+                var numberOfAnserwsInDb = context.Answer.Count();
+                numberOfAnserwsInDb.Should().Be(2);
             }
         }
 
@@ -57,9 +59,12 @@ namespace QuizApp.Test.ServiceTests
             {
                 var service = new AnswerService(context);
                 service.DeleteAnswerByID(1);
-                Assert.Equal(1, context.Answer.Count());
-                Assert.Equal("BBB", context.Answer.Single().Content);
-                Assert.Equal(2, context.Answer.Single().Id);
+
+                var numberOfAnserwsInDb = context.Answer.Count();
+                var idOfLastedAnswer = context.Answer.Single().Id;
+
+                numberOfAnserwsInDb.Should().Be(1);
+                idOfLastedAnswer.Should().Be(2);
             }
         }
         [Fact]
@@ -74,10 +79,9 @@ namespace QuizApp.Test.ServiceTests
             using (var context = new QuizDbContext(options))
             {
                 var service = new AnswerService(context);
-                var actual = service.GetAnswerByID(2);
+                var questionIdOfChosenAnswer = service.GetAnswerByID(2).QuestionID;
 
-                Assert.Equal("BBB", actual.Content);
-                Assert.Equal(13, actual.QuestionID);
+                questionIdOfChosenAnswer.Should().Be(13);
             }
         }
 
@@ -95,8 +99,9 @@ namespace QuizApp.Test.ServiceTests
                 var service = new AnswerService(context);
                 var actual = service.GetAnswersByQuestionID(12);
 
-                Assert.Equal("AAA", actual[0].Content);
-                Assert.Equal(1, actual[0].Id);
+                var numberOfAnswersToSelectedQuestion = actual.Count();
+
+                numberOfAnswersToSelectedQuestion.Should().Be(1);
             }
         }
 
@@ -115,8 +120,11 @@ namespace QuizApp.Test.ServiceTests
                 Answer a1 = new Answer { Content = "QWE", Id = 1 };
                 service.UpdateAnswer(a1);
 
-                Assert.Equal(2, context.Answer.Count());
-                Assert.Equal("QWE", context.Answer.FirstOrDefault((x => x.Id == 1)).Content);
+                var numberOfAnserwsInDb = context.Answer.Count();
+                var contentOfUpdatedAnswer = context.Answer.FirstOrDefault((x => x.Id == 1)).Content;
+
+                numberOfAnserwsInDb.Should().Be(2);
+                contentOfUpdatedAnswer.Should().Be("QWE");
             }
         }
 

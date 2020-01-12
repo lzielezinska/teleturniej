@@ -2,6 +2,28 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+let questionDisabled = false;
+const sendResponse = (quizId, data) => {
+    $.ajax({
+        type: "POST",
+        url: `${window.location.origin}/Quiz/${quizId}/Result`,
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: () => { return null },
+    });
+
+}
+
+const sendResult = (quiz, value) => {
+    const correct = value === 'True';
+    const question = parseInt($("#question_id").val(), 10);
+    const attempt = parseInt($("#attempt_id").val(), 10);
+    if (!questionDisabled) {
+        questionDisabled = true;
+        sendResponse(quiz, { correct, attempt, question});
+    }
+}
 
 $('.card.answer-card').click(function () {
     $(".card.answer-card").each(function () {

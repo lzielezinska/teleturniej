@@ -1,0 +1,44 @@
+﻿@model IEnumerable<QuizApp.Models.AttemptViewModel>
+
+<h2 class="mb-3">
+    Wyniki
+</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="thead-primary">
+            <tr>
+                <th>
+                    Nazwa quiz'u
+                </th>
+                <th>
+                    Ilość poprawnych odpowiedzi
+                </th>
+                <th>
+                    Ilość pytań
+                </th>
+                <th>
+                    Data
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-grey-hover">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.attempt.Quiz.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.correct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.attempt.StartDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

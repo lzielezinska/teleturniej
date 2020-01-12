@@ -9,5 +9,6 @@ namespace QuizApp.Models
     {
         public Question Question { get; set; }
         public Boolean IsAnswerFinal { get; set; }
+        public int? AttemptId { get; set; }
     }
 }

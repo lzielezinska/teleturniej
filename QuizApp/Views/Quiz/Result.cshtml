@@ -1,0 +1,20 @@
+﻿@model QuizApp.Models.ResultViewModel
+<h1 class="text-center">
+    Gratulacje!
+</h1>
+<div class="d-flex">
+    <div class="col-6 text-center">
+        <div class="row h-100">
+            <div class="col-12 my-auto">
+                <h1>Twój wynik to:</h1>
+                <h1 class="score">@Model.correct / @Model.total</h1>  
+            </div>
+        </div>
+    </div>
+    <div class="col-6 text-center">
+        <i class="fas fa-trophy trophy"></i>
+        <div class="mt-5">
+            <a class="btn btn-green" asp-controller="Home" asp-action="Index">Zakończ</a>
+        </div>
+    </div>
+</div>

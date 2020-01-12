@@ -14,5 +14,7 @@ namespace QuizApp.Data
         public DbSet<Question> Question { get; set; }
         public DbSet<Answer> Answer { get; set; }
         public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<Attempt> Attempt { get; set; }
+        public DbSet<Result> Result { get; set; }
     }
 }

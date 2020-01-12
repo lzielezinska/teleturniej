@@ -125,6 +125,15 @@
     font-weight: bold;
 }
 
+.score {
+    color: var(--secondary-color);
+}
+
+.trophy {
+    color: var(--grey-color);
+    font-size: 40vh;
+}
+
 :root {
     --primary-color: #01579b;
     --secondary-color: #b71c1c;

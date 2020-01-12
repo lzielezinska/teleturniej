@@ -56,16 +56,29 @@ namespace QuizApp
             services.AddTransient<IAnswerService, AnswerService>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IQuizService, QuizService>();
+            services.AddTransient<IAttemptService, AttemptService>();
+            services.AddTransient<IResultService, ResultService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             //services.AddSignalR();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

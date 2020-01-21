@@ -18,5 +18,6 @@ namespace QuizApp.Models
         [StringLength(6)]
         public string Code { get; set; }
         public Boolean Active { get; set; }
+        public List<Attempt> Attempts { get; set; }
     }
 }

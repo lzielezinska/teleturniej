@@ -1,0 +1,38 @@
+﻿@model IEnumerable<QuizApp.Models.PIN>
+
+<h2 class="mb-3">
+    Wyniki
+</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="thead-primary">
+            <tr>
+                <th>
+                    Nazwa quiz'u
+                </th>
+                <th>
+                    PIN
+                </th>
+                <th>
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-grey-hover">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quiz.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        <a asp-action="ShowResults" asp-route-id="@item.Id">Wyświetl wyniki</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

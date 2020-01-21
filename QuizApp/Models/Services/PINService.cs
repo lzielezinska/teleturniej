@@ -1,4 +1,5 @@
-﻿using QuizApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,37 @@ namespace QuizApp.Models.Services
         {
             PIN pin = _context.PIN.Where(x => x.Code == code).Where(x => x.Active == true).FirstOrDefault();
             return pin;
+        }
+        
+        public List<PIN> FindForUser(string userId)
+        {
+            List<PIN> pins = _context.PIN.Where(x => x.UserId == userId).Where(x => x.Active == false)
+                .Include(e => e.Quiz).ToList();
+            return pins;
+        }
+
+        public List<AttemptViewModel> FindResults(int id)
+        {
+            PIN pin = _context.PIN.Where(x => x.Id == id).Include(e => e.Attempts).FirstOrDefault();
+            var model = new List<AttemptViewModel>();
+            foreach (var attempt in pin.Attempts)
+            {
+                var attemptUser = _context.Attempt.Where(x => x.Id == attempt.Id).Include(e => e.User).FirstOrDefault();
+                attempt.User = attemptUser.User;
+                List<Result> results = _context.Result.Where(x => x.AttemptID == attempt.Id).ToList();
+                int correct = 0;
+                int total = 0;
+                foreach (var result in results)
+                {
+                    if (result.Response)
+                    {
+                        correct++;
+                    }
+                    total++;
+                }
+                model.Add(new AttemptViewModel { attempt = attempt, total = total, correct = correct });
+            }
+            return model;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace QuizApp.Models.Services
         void DisablePIN(string code);
         GeneratePINViewModel GeneratePIN(int quizId, string userId);
         PIN FindByCode(string code);
+        List<PIN> FindForUser(string userId);
+        List<AttemptViewModel> FindResults(int id);
     }
 }

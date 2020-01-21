@@ -134,6 +134,26 @@
     font-size: 40vh;
 }
 
+.numeric-theme {
+    margin: 0 auto;
+}
+
+.simple-keyboard.hg-theme-default.numeric-theme
+.hg-button.hg-standardBtn.hg-button-at {
+    max-width: none;
+}
+
+.simple-keyboard {
+    max-width: 400px;
+}
+
+.pin-code-text {
+    border: 1px solid black;
+    border-radius: 20px;
+    height: 20vh;
+    font-size: 10vh;
+}
+
 :root {
     --primary-color: #01579b;
     --secondary-color: #b71c1c;

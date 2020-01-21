@@ -16,6 +16,7 @@ namespace QuizApp.Controllers
         private IAnswerService _answerService;
         private IAttemptService _attemptService;
         private IResultService _resultService;
+        private IPINService _pinService;
         private UserManager<IdentityUser> _userManager;
 
         public QuizController(IQuizService quizService,
@@ -23,6 +24,7 @@ namespace QuizApp.Controllers
             IAnswerService answerService,
             IAttemptService attemptService,
             IResultService resultService,
+            IPINService pinService,
             UserManager<IdentityUser> userManager)
         {
             _quizService = quizService;
@@ -30,6 +32,7 @@ namespace QuizApp.Controllers
             _answerService = answerService;
             _attemptService = attemptService;
             _resultService = resultService;
+            _pinService = pinService;
             _userManager = userManager;
         }
 
@@ -45,7 +48,8 @@ namespace QuizApp.Controllers
         [Authorize(Roles = "Lecturer")]
         public IActionResult GeneratePIN(int id)
         {
-            GeneratePINViewModel model = _quizService.GeneratePIN(id);
+            var user = _userManager.GetUserId(User);
+            GeneratePINViewModel model = _pinService.GeneratePIN(id, user);
 
             return View(model);
         }
@@ -59,16 +63,15 @@ namespace QuizApp.Controllers
         }
 
         [Authorize(Roles = "User")]
+        public IActionResult EnterPIN()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
         [Route("Quiz/{quizId}/Question/{numberOfQuestion}", Name = "QuestionView")]
         public IActionResult Question(int quizId, int numberOfQuestion)
         {
-            if (numberOfQuestion == 0)
-            {
-                var user =  _userManager.GetUserId(User);
-                var attempt = new Attempt{ QuizID = quizId, UserId = user, StartDate = DateTime.Now };
-                _attemptService.CreateAttempt(attempt);
-                HttpContext.Session.SetInt32("attempt", attempt.Id);
-            }
             var question = _questionService.GetCurrentQuestion(quizId, numberOfQuestion);
             question.AttemptId = HttpContext.Session.GetInt32("attempt");
 
@@ -82,9 +85,40 @@ namespace QuizApp.Controllers
         [Route("Quiz/{quizId}/Result")]
         public string AddResult(int quizId, [FromBody] ResultRequest value)
         {
-            var result = new Result { QuestionID = value.question, AttemptID = value.attempt, Response = value.correct};
-            _resultService.CreateResult(result);
+            _resultService.UpdateResult(value.attempt, value.question, value.correct);
             return "OK";
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Lecturer")]
+        [Route("Quiz/DisablePIN")]
+        public string DisablePIN([FromBody] PINRequest value)
+        {
+            _pinService.DisablePIN(value.code);
+            return "OK";
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "User")]
+        [Route("Quiz/Start")]
+        public int Start([FromBody] PINRequest value)
+        {
+            PIN pin = _pinService.FindByCode(value.code);
+            if (pin != null)
+            {
+                var user = _userManager.GetUserId(User);
+                var attempt = new Attempt { PINID = pin.Id, UserId = user, StartDate = DateTime.Now };
+                _attemptService.CreateAttempt(attempt);
+                HttpContext.Session.SetInt32("attempt", attempt.Id);
+                var questions = _questionService.GetQuestionsByQuizID(pin.QuizID);
+                foreach (var question in questions)
+                {
+                    var result = new Result { QuestionID = question.Id, AttemptID = attempt.Id, Response = false };
+                    _resultService.CreateResult(result);
+                }
+                return pin.QuizID;
+            }
+            return 0;
         }
     }
 }
@@ -95,4 +129,8 @@ public class ResultRequest
     public bool correct { get; set; }
     public int question { get; set; }
  
+}
+public class PINRequest
+{
+    public string code { get; set; }
 }

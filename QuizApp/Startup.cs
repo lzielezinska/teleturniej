@@ -58,6 +58,7 @@ namespace QuizApp
             services.AddTransient<IQuizService, QuizService>();
             services.AddTransient<IAttemptService, AttemptService>();
             services.AddTransient<IResultService, ResultService>();
+            services.AddTransient<IPINService, PINService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddControllersWithViews();

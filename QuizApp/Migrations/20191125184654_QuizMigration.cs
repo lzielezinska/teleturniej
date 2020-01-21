@@ -20,6 +20,34 @@ namespace QuizApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+              name: "PIN",
+              columns: table => new
+              {
+                  Id = table.Column<int>(nullable: false)
+                      .Annotation("Sqlite:Autoincrement", true),
+                  QuizID = table.Column<int>(nullable: false),
+                  UserId = table.Column<string>(nullable: false),
+                  Code = table.Column<string>(maxLength: 6, nullable: false),
+                  Active = table.Column<bool>(nullable: false)
+              },
+              constraints: table =>
+              {
+                  table.PrimaryKey("PK_PIN", x => x.Id);
+                  table.ForeignKey(
+                      name: "FK_PIN_Quiz_QuizID",
+                      column: x => x.QuizID,
+                      principalTable: "Quiz",
+                      principalColumn: "Id",
+                      onDelete: ReferentialAction.Cascade);
+                  table.ForeignKey(
+                        name: "FK_PIN_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+              });
+
+            migrationBuilder.CreateTable(
                 name: "Question",
                 columns: table => new
                 {
@@ -66,7 +94,7 @@ namespace QuizApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    QuizID = table.Column<int>(nullable: false),
+                    PINID = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
                     StartDate = table.Column<int>(type: "TIMESTAMP", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
@@ -74,9 +102,9 @@ namespace QuizApp.Migrations
                 {
                     table.PrimaryKey("PK_Attempt", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attempt_Quiz_QuizID",
-                        column: x => x.QuizID,
-                        principalTable: "Quiz",
+                        name: "FK_Attempt_PIN_PINID",
+                        column: x => x.PINID,
+                        principalTable: "PIN",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -125,9 +153,9 @@ namespace QuizApp.Migrations
                 column: "QuizID");
 
             migrationBuilder.CreateIndex(
-               name: "IX_Attempt_QuizID",
+               name: "IX_Attempt_PINID",
                table: "Attempt",
-               column: "QuizID");
+               column: "PINID");
 
             migrationBuilder.CreateIndex(
                name: "IX_Attempt_UserId",
@@ -143,10 +171,23 @@ namespace QuizApp.Migrations
                name: "IX_Result_AttemptID",
                table: "Result",
                column: "AttemptID");
+
+            migrationBuilder.CreateIndex(
+               name: "IX_PIN_OuizID",
+               table: "PIN",
+               column: "QuizID");
+
+            migrationBuilder.CreateIndex(
+               name: "IX_PIN_UserId",
+               table: "PIN",
+               column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+               name: "PIN");
+
             migrationBuilder.DropTable(
                name: "Result");
 

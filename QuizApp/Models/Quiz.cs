@@ -11,7 +11,7 @@ namespace QuizApp.Models
         [StringLength(20, MinimumLength = 3)]
         public string Name { get; set; }
         public List<Question> Questions { get; set; }
-        public List<Attempt> Attempts { get; set; }
+        public List<PIN> Pins { get; set; }
     }
 }
 

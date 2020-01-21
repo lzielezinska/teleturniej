@@ -9,5 +9,6 @@ namespace QuizApp.Models.Services
     {
         void CreateResult(Result result);
         ResultViewModel GetResult(int? attempt);
+        void UpdateResult(int attemp, int question, bool value);
     }
 }

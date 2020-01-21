@@ -30,17 +30,6 @@ namespace QuizApp.Models.Services
             }
         }
 
-        public GeneratePINViewModel GeneratePIN(int quizId)
-        {
-            Random rnd = new Random();
-            string pin = rnd.Next(100000, 999999).ToString();
-
-            return new GeneratePINViewModel
-            {
-                PIN = pin
-            };
-        }
-
         public IList<Quiz> GetAll()
         {
             return _context.Quiz

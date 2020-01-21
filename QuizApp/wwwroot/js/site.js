@@ -16,6 +16,11 @@ const sendResponse = (quizId, data) => {
 }
 
 const sendResult = (quiz, value) => {
+    $(".card.answer-card").each(function () {
+        var myValue = $(this).attr('value');
+        if (myValue == "True") $(this).addClass("correct-answer");
+        else $(this).addClass("wrong-answer");
+    });
     const correct = value === 'True';
     const question = parseInt($("#question_id").val(), 10);
     const attempt = parseInt($("#attempt_id").val(), 10);
@@ -24,14 +29,6 @@ const sendResult = (quiz, value) => {
         sendResponse(quiz, { correct, attempt, question});
     }
 }
-
-$('.card.answer-card').click(function () {
-    $(".card.answer-card").each(function () {
-        var myValue = $(this).attr('value');
-        if (myValue == "True") $(this).addClass("correct-answer");
-        else $(this).addClass("wrong-answer");
-    });
-});
 
 const openNav = () => {
     const sidenav = document.getElementById('mySidenav').style;
@@ -48,3 +45,20 @@ const closeNav = () => {
     sidenav.paddingRight = '0';
     document.getElementById('main').style.marginLeft = '0';
 };
+
+const closeQuiz = (pin) => {
+    const data = {
+        code: pin
+    };
+    $.ajax({
+        type: "POST",
+        url: `${window.location.origin}/Quiz/DisablePIN`,
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: 'text/plain; charset=utf-8',
+        complete: () => {
+            window.location = `${window.location.origin}/Quiz/`;
+        },
+    });
+
+}

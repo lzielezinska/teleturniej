@@ -34,5 +34,15 @@ namespace QuizApp.Models.Services
             }
             return new ResultViewModel { correct = correct, total = total };
         }
+
+        public void UpdateResult(int attemp, int question, bool value)
+        {
+            var result = _context.Result.Where(x => x.AttemptID == attemp)
+                .Where(x => x.QuestionID == question)
+                .FirstOrDefault();
+            result.Response = value;
+            _context.Result.Update(result);
+            _context.SaveChanges();
+        }
     }
 }

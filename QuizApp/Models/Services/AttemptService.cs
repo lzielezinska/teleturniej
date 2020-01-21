@@ -24,7 +24,7 @@ namespace QuizApp.Models.Services
         {
             var attempts = _context.Attempt.Where(x => x.UserId == userId)
                 .Include(e => e.Results)
-                .Include(e => e.Quiz);
+                .Include(e => e.PIN.Quiz);
             var model = new List<AttemptViewModel>();
             foreach (var attemp in attempts)
             {

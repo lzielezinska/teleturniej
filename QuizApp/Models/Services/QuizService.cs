@@ -1,4 +1,5 @@
-﻿using QuizApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,17 @@ namespace QuizApp.Models.Services
         }
 
         public Quiz GetQuizByID(int quizId)
-        {
-            return _context.Quiz
-                .FirstOrDefault(x => x.Id == quizId);
+        {   
+            var quiz = _context.Quiz
+                   .Where(q => q.Id == quizId)
+                   .Include(q => q.Questions)
+                   .ThenInclude(a => a.Answers)
+                   .FirstOrDefault();
+
+            return quiz;
         }
+
+
 
         public void UpdateQuiz(Quiz quiz)
         {

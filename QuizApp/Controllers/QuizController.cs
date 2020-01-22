@@ -46,6 +46,41 @@ namespace QuizApp.Controllers
         }
 
         [Authorize(Roles = "Lecturer")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Lecturer")]
+        public IActionResult Create([Bind("Name,Questions")]Quiz quiz)
+        {
+            _quizService.CreateQuiz(quiz);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Lecturer")]
+        public IActionResult Edit(int id)
+        {
+            var quiz = _quizService.GetQuizByID(id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+            return View(quiz);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Lecturer")]
+        public IActionResult Edit([Bind("Id,Name,Questions")]Quiz quiz)
+        {
+            _quizService.UpdateQuiz(quiz);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Lecturer")]
         public IActionResult GeneratePIN(int id)
         {
             var user = _userManager.GetUserId(User);

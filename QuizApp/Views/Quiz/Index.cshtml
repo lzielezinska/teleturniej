@@ -22,7 +22,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a asp-action="GeneratePIN" asp-route-id="@item.Id">Generuj PIN</a>
+                    <a asp-action="GeneratePIN" asp-route-id="@item.Id">Generuj PIN</a><br />
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
                 </td>
             </tr>
     }

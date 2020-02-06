@@ -7,7 +7,7 @@
 <h1>Edycja Quizu</h1>
 
 <hr />
-    <div class="w3-row-padding">
+<div class="w3-row-padding">
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
@@ -19,16 +19,25 @@
             {
                 @foreach (var x in Model.Questions)
                 {
-                    {<input asp-for="@x.Content" class="form-control" />}
+                    <input asp-for="@x.Content" class="form-control" />
                     @if (x.Answers != null)
                     {
                         @foreach (var y in x.Answers)
                         {
-                            {<input asp-for="@y.Content" class="w3-input" />}
+                            <input class="w3-input w3-half" asp-for="@y.Content" size="50" required />
+                            @if (y.IsCorrect == true)
+                            {
+                                <input type="radio" value="true" name="@x.Id" asp-for="@y.IsCorrect" checked />
+                            }
+                            else
+                            {
+                                <input type="radio" value="true" name="@x.Id" asp-for="@y.IsCorrect" />
+                            }
                         }
                     }
                 }
             }
+            <div id="QuestioContent" class="form-group"></div>
         </div>
         <div class="form-group">
             <input type="submit" value="Zapisz" class="btn btn-primary" />
@@ -39,4 +48,5 @@
 <div>
     <a asp-action="Index">Powróć do listy quizów</a>
 </div>
+
 

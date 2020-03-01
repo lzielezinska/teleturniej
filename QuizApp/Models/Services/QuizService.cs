@@ -55,5 +55,16 @@ namespace QuizApp.Models.Services
             _context.Quiz.Update(quiz);
             _context.SaveChanges();
         }
+
+        public void RemoveDeletedQuestions(Quiz quiz)
+        {
+            var questions = _context.Question.Where(c => c.QuizID == quiz.Id);
+            foreach (var item in questions)
+            {
+                if(!quiz.Questions.Any(c => c.Id == item.Id))
+                    _context.Question.Remove(item);
+            }
+            _context.SaveChanges();
+        }
     }
 }

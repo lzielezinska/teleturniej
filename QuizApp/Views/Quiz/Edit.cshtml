@@ -8,6 +8,7 @@
 
 <hr />
 <div class="w3-row-padding">
+    <button id="AddNextQuestionFrom" class="btn btn-secondary"> Dodaj Pytanie </button>
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
@@ -17,36 +18,90 @@
             <hr />
             @if (Model.Questions != null)
             {
-                @foreach (var x in Model.Questions)
+                int b = 0;
+                int a = 0;
+                @foreach (var q in Model.Questions)
                 {
-                    <input asp-for="@x.Content" class="form-control" />
-                    @if (x.Answers != null)
-                    {
-                        @foreach (var y in x.Answers)
+                    <div id="@a">
+                        <input name="Questions[@a].Content" value="@q.Content" class="form-control" />
+                        <input type="hidden" name="Questions[@a].Id" value="@q.Id" class="text-danger" />
+                        @foreach (var x in q.Answers)
                         {
-                            <input class="w3-input w3-half" asp-for="@y.Content" size="50" required />
-                            @if (y.IsCorrect == true)
+                            <input class="w3-input w3-half" name="Questions[@a].Answers[@b].Content" value="@x.Content" size="50" required />
+                            <input class="text-danger" type="hidden" name="Questions[@a].Answers[@b].Id" value="@x.Id" />
+                            @if (x.IsCorrect == true)
                             {
-                                <input type="radio" value="true" name="@x.Id" asp-for="@y.IsCorrect" checked />
+                                <input type="checkbox" id="@a+@b" onclick="selectOnlyThis(this.id, @a)" value="true" name="Questions[@a].Answers[@b].IsCorrect" checked />
                             }
                             else
                             {
-                                <input type="radio" value="true" name="@x.Id" asp-for="@y.IsCorrect" />
+                                <input type="checkbox" id="@a+@b" onclick="selectOnlyThis(this.id, @a)" value="true" name="Questions[@a].Answers[@b].IsCorrect" />
                             }
+                            b = @b + 1;
                         }
-                    }
+                        <button onclick="removeSection(@a)" class="btn btn-secondary"> Usuń Pytanie </button>
+                    </div>
+                    a = @a + 1;
+                    b = 0;
                 }
             }
-            <div id="QuestioContent" class="form-group"></div>
+        <div id="QuestioContent"></div>
         </div>
         <div class="form-group">
             <input type="submit" value="Zapisz" class="btn btn-primary" />
         </div>
     </form>
+    <input type="hidden" id="questionID" value="@Model.Questions.Count()" />
 </div>
 
 <div>
     <a asp-action="Index">Powróć do listy quizów</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#AddNextQuestionFrom").click(function () {
+                tc = parseInt($("#questionID").val());
+                tc = tc + 1;
+                $("#questionID").val(tc)
+
+                $("#QuestioContent").append(
+                    '<div id="' + (tc - 1) + '">' +
+                        '<label name = "Questions[' + (tc - 1) + '].Content" class= "control-label">Pytanie</label > ' +
+                        '<input name="Questions[' + (tc - 1) + '].Content" class="form-control" size="100" required/><br />'+
+
+                        '<input class="w3-input w3-half" name="Questions[' + (tc - 1) + '].Answers[0].Content" placeholder="Odpowiedź" size="50" required/>' +
+                        '<input type="checkbox" id="' + (tc - 1) + '+0" onclick="selectOnlyThis(this.id,' + (tc - 1) + ')" data-val="true" name="Questions[' + (tc - 1) + '].Answers[0].IsCorrect" value="true"/>' +
+
+                        '<input class="w3-input w3-half" name="Questions[' + (tc - 1) + '].Answers[1].Content" placeholder="Odpowiedź" size="50" required/>' +
+                        '<input type="checkbox" id="' + (tc - 1) + '+1" onclick="selectOnlyThis(this.id,' + (tc - 1) + ')" data-val="true" name="Questions[' + (tc - 1) + '].Answers[1].IsCorrect" value="true"/>' +
+
+                        '<input class="w3-input w3-half" name="Questions[' + (tc - 1) + '].Answers[2].Content" placeholder="Odpowiedź" size="50" required/>' +
+                        '<input type="checkbox" id="' + (tc - 1) + '+2" onclick="selectOnlyThis(this.id,' + (tc - 1) + ')" data-val="true" name="Questions[' + (tc - 1) + '].Answers[2].IsCorrect" value="true"/>' +
+
+                        '<input class="w3-input w3-half" name="Questions[' + (tc - 1) + '].Answers[3].Content" placeholder="Odpowiedź" size="50" required/>' +
+                        '<input type="checkbox" id="' + (tc - 1) + '+3" onclick="selectOnlyThis(this.id,' + (tc - 1) + ')" data-val="true" name="Questions[' + (tc - 1) + '].Answers[3].IsCorrect" value="true"/>' +
+                        '<button onclick="removeSection(' + (tc - 1) + ')" class="btn btn-secondary"> Usuń Pytanie </button>' +
+                    '</div>')
+            });
+        });
+
+        function removeSection(id_of_div) {
+            tc = parseInt($("#questionID").val());
+            tc = tc - 1;
+            var id = "#" + id_of_div;
+            $("#questionID").val(tc)
+            $(id).remove()
+        }
+
+        function selectOnlyThis(id, a) {
+            for (var i = 0; i < 4; i++) {
+                document.getElementById(a + '+' + i).checked = false;
+            }
+            document.getElementById(id).checked = true;
+        }
+    </script>
+}
 

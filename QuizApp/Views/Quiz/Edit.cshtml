@@ -39,19 +39,21 @@
                             }
                             b = @b + 1;
                         }
-                        <button onclick="removeSection(@a)" class="btn btn-secondary"> Usuń Pytanie </button>
+                        @*<button onclick="removeSection(@a)" class="btn btn-secondary"> Usuń Pytanie </button>*@
                     </div>
                     a = @a + 1;
                     b = 0;
                 }
             }
-        <div id="QuestioContent"></div>
+            <div id="QuestioContent"></div>
         </div>
         <div class="form-group">
             <input type="submit" value="Zapisz" class="btn btn-primary" />
         </div>
     </form>
+    @*<input type="hidden" id="questionID" value="@Model.Questions[@Model.Questions.Count()-1].Id" />*@
     <input type="hidden" id="questionID" value="@Model.Questions.Count()" />
+
 </div>
 
 <div>

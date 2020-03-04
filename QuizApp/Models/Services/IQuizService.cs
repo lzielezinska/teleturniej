@@ -12,5 +12,6 @@ namespace QuizApp.Models.Services
         void CreateQuiz(Quiz quiz);
         void UpdateQuiz(Quiz quiz);
         void DeleteQuizByID(int quizId);
+        void RemoveDeletedQuestions(Quiz quiz);
     }
 }

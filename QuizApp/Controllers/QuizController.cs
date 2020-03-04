@@ -76,6 +76,7 @@ namespace QuizApp.Controllers
         [Authorize(Roles = "Lecturer")]
         public IActionResult Edit([Bind("Id,Name,Questions")]Quiz quiz)
         {
+            //_quizService.RemoveDeletedQuestions(quiz);
             _quizService.UpdateQuiz(quiz);
             return RedirectToAction(nameof(Index));
         }

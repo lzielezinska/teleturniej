@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,8 @@ namespace QuizApp
 
                 try
                 {
+                    var dbContext = scope.ServiceProvider.GetService<QuizDbContext>();
+                    dbContext.Database.Migrate();
                     SeedData.Initialize(services);
 
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
